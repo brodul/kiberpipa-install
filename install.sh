@@ -54,7 +54,7 @@ service autofs restart
 git clone git://github.com/brodul/kiberpipa-ldap-config.git
 
 # Install the deps for LDAP client
-aptitude -y --full-resolver install libpam-ldap libnss-ldap nss-updatedb libnss-db
+DEBIAN_FRONTEND=noninteractive aptitude -y --full-resolver install libpam-ldap libnss-ldap nss-updatedb libnss-db
 
 # Install the confs
 cp kiberpipa-ldap-config/pam_ldap.conf /etc/pam_ldap.conf
