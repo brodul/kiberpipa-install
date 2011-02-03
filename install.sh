@@ -90,3 +90,12 @@ cp kiberpipa-pam-config/common-auth /etc/pam.d/common-auth
 cp kiberpipa-pam-config/common-password /etc/pam.d/common-password
 
 #######
+
+
+###
+# Post install stuff
+###
+
+mkdir -p /opt/home/
+mkdir -p /opt/home/pipa
+usermod  -d /opt/home/pipa pipa
