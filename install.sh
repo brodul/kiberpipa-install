@@ -21,7 +21,16 @@ read  a1
 		    exit 1
             fi
 
+# Check if script was started
+if [ -f /var/kiberpipa_ ]
+    then
+	exit 1
+fi
 
+echo "Ldap script was started on" >> /var/kiberpipa_
+date +%D >> /var/kiberpipa_
+
+# Build deps
 apt-get update
 apt-get -y install aptitude git-core
 
@@ -98,4 +107,6 @@ cp kiberpipa-pam-config/common-password /etc/pam.d/common-password
 
 mkdir -p /opt/home/
 mkdir -p /opt/home/pipa
+
+chown -R pipa:pipa /opt/home/pipa
 usermod  -d /opt/home/pipa pipa
