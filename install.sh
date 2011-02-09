@@ -13,15 +13,25 @@ echo -e "\nDISCLAIMER:\nI f***ing know what this script does and I can read bash
 
 read  a1
 
-# Stops n00bsfrom doing weird stuff
-        echo
-            if [ "$a1" != "mamba" ]
-                then
-                    echo "HAHA, u cant read bash, u poor guy"
-		    exit 1
-            fi
 
-# Check if script was started
+###
+# Stops n00bsfrom doing weird stuff
+###
+
+echo
+
+if [ "$a1" != "mamba" ]
+    then
+	echo "HAHA, u cant read bash, u poor guy"
+	exit 1
+fi
+
+#######
+
+###
+# Check if script has been allready started
+###
+
 if [ -f /var/kiberpipa_ ]
     then
 	exit 1
@@ -30,10 +40,34 @@ fi
 echo "Ldap script was started on" >> /var/kiberpipa_
 date +%D >> /var/kiberpipa_
 
-# Build deps
+
+#######
+
+###
+# Pre-install
+###
+
+# Moves the local users homes to /opt/home/
+
+mkdir -p /opt/home/
+
+for user in  $( getent passwd | grep home | cut -d : -f 1 )
+    do	
+	mkdir -p /opt/home/$user
+	chown -R $user:$user /opt/home/$user
+	usermod  -d /opt/home/$user $user
+    done
+
+#######
+
+###
+# Install deps
+##
+
 apt-get update
 apt-get -y install aptitude git-core
 
+#######
 
 ###
 # AutoFS part
@@ -52,7 +86,7 @@ cp kiberpipa-autofs-config/auto.nfs /etc/
 # Restart autofs
 service autofs restart
 
-########
+#######
 
 
 ###
@@ -105,8 +139,5 @@ cp kiberpipa-pam-config/common-password /etc/pam.d/common-password
 # Post install stuff
 ###
 
-mkdir -p /opt/home/
-mkdir -p /opt/home/pipa
-
-chown -R pipa:pipa /opt/home/pipa
-usermod  -d /opt/home/pipa pipa
+# none
+#######################################
